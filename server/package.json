@@ -1,4 +1,13 @@
 {
-  "name": "dwellohomes",
-  "version": "0.1.0"
+  "name": "tinyhouse-v1-server",
+  "version": "0.1.0",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  },
+  "scripts": {
+    "start": "nodemon src/"
+  }
 }
