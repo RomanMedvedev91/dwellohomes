@@ -1,6 +1,11 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import { ApolloServer } from 'apollo-server-express';
+
 const app = express();
+const server = new ApolloServer();
+
+server.applyMiddleware({ app, path: '/api' });
 const port = 9000;
 import { listings } from './listings';
 
