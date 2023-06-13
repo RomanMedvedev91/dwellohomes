@@ -1,12 +1,13 @@
-import { listings } from '../listings';
 import { IResolvers } from 'apollo-server-express';
+import { listings } from '../listings';
 
 export const resolvers: IResolvers = {
   Query: {
     listings: () => {
       return listings;
-    }
+    },
   },
+
   Mutation: {
     deleteListing: (_root: undefined, { id }: { id: string }) => {
       for (let i = 0; i < listings.length; i++) {
@@ -15,7 +16,7 @@ export const resolvers: IResolvers = {
         }
       }
 
-      throw new Error("failed to deleted listing");
-    }
-  }
+      throw new Error('failed to deleted listing');
+    },
+  },
 };
