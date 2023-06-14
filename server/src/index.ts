@@ -1,9 +1,10 @@
+require("dotenv").config();
 import express, { Application } from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import { connectDatabase } from './database';
 import { typeDefs, resolvers } from './graphql';
 
-const port = 9000;
+const port = process.env.PORT;
 
 const mount = async (app: Application) => {
   const db = await connectDatabase();
@@ -19,7 +20,7 @@ const mount = async (app: Application) => {
   console.log(`[app] : http://localhost:${port}`);
 
   const listings = await db.listings.find({}).toArray(); // listings is type any[]
-  console.log(db);
+  console.log('listings: ', listings);
 };
 
 mount(express());

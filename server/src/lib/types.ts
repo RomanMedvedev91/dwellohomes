@@ -12,6 +12,6 @@ export interface Listing {
   rating: number;
 }
 
-interface Database {
-  listings: Collection;
+export interface Database {
+  listings: Collection<Listing>;
 }
