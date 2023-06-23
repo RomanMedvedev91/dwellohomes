@@ -1,7 +1,36 @@
 import React from 'react'
+import { server } from '../../lib/api';
 
-export const  Listings = () => {
+const LISTINGS = `
+  query Listings {
+    listings {
+      id
+      title
+      image
+      address
+      price
+      numOfGuests
+      numOfBeds
+      numOfBaths
+      rating
+    }
+  }
+`;
+
+interface IListingsProps {
+  title: string;
+}
+
+export const  Listings = ({ title }: IListingsProps) => {
+  const fetchListings = async () => {
+    const { data } = await server.fetch({ query: LISTINGS });
+    console.log(data);
+  };
+
   return (
-    <h2>Dwello homes</h2>
+    <div>
+      <h2>{title}</h2>
+      <button onClick={fetchListings}>Query Listings!</button>
+    </div>
   )
 }
