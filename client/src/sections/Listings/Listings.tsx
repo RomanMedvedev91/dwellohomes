@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { server } from '../../lib/api';
 import { DeleteListingData, DeleteListingVariables, ListingsData, type Listing } from "./types";
 
@@ -32,6 +32,12 @@ interface IListingsProps {
 
 export const  Listings = ({ title }: IListingsProps) => {
   const [listings, setListings] = useState<Listing[] | null>(null);
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    fetchListings();
+  }, []);
+
   const fetchListings = async () => {
     const { data } = await server.fetch<ListingsData>({ query: LISTINGS });
     setListings(data.listings);
@@ -61,6 +67,7 @@ export const  Listings = ({ title }: IListingsProps) => {
             </li>
         ))}
       <button onClick={fetchListings}>Query Listings!</button>
+      <button onClick={() => setCount(count + 1)}>Increase Count</button>
       <ul>
       </ul>
     </div>
