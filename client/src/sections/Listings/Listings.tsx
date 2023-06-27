@@ -32,7 +32,7 @@ interface IListingsProps {
 }
 
 export const  Listings = ({ title }: IListingsProps) => {
-  const { data } = useQuery<ListingsData>(LISTINGS);
+  const { data, refetch } = useQuery<ListingsData>(LISTINGS);
 
   const deleteListing = async (id: string) => {
     await server.fetch<DeleteListingData, DeleteListingVariables>({
@@ -41,6 +41,7 @@ export const  Listings = ({ title }: IListingsProps) => {
         id
       }
     });
+    refetch();
   };
 
   return (
