@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { server } from '../../lib/api';
 import { DeleteListingData, DeleteListingVariables, ListingsData, type Listing } from "./types";
+import { useQuery } from '../../lib/api';
 
 const LISTINGS = `
   query Listings {
@@ -31,17 +32,7 @@ interface IListingsProps {
 }
 
 export const  Listings = ({ title }: IListingsProps) => {
-  const [listings, setListings] = useState<Listing[] | null>(null);
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    fetchListings();
-  }, []);
-
-  const fetchListings = async () => {
-    const { data } = await server.fetch<ListingsData>({ query: LISTINGS });
-    setListings(data.listings);
-  };
+  const { data } = useQuery<ListingsData>(LISTINGS);
 
   const deleteListing = async (id: string) => {
     await server.fetch<DeleteListingData, DeleteListingVariables>({
@@ -50,13 +41,12 @@ export const  Listings = ({ title }: IListingsProps) => {
         id
       }
     });
-    fetchListings();
   };
 
   return (
     <div>
       <h2>{title}</h2>
-        {listings?.map(listing => (
+        {data?.listings.map(listing => (
           <li key={listing.id}>
             {listing.title}{" "}
             <button 
@@ -66,8 +56,6 @@ export const  Listings = ({ title }: IListingsProps) => {
             </button>
             </li>
         ))}
-      <button onClick={fetchListings}>Query Listings!</button>
-      <button onClick={() => setCount(count + 1)}>Increase Count</button>
       <ul>
       </ul>
     </div>
