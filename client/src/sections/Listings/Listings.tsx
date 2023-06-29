@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { server } from '../../lib/api';
-import { DeleteListingData, DeleteListingVariables, ListingsData, type Listing } from "./types";
+import React from 'react'
+import { DeleteListingData, DeleteListingVariables, ListingsData } from "./types";
 import { useMutation, useQuery } from '../../lib/api';
 
 const LISTINGS = `
@@ -38,6 +37,11 @@ export const  Listings = ({ title }: IListingsProps) => {
     error: deleteListingError
   }] = useMutation<DeleteListingData, DeleteListingVariables>(DELETE_LISTING);
 
+  const handleDeleteListing = async (id: string) => {
+    await deleteListing({ id })
+    refetch();
+  };
+
   if (loading) {
     return <h2>Loading...</h2>;
   }
@@ -50,11 +54,6 @@ export const  Listings = ({ title }: IListingsProps) => {
   const deleteListingErrorMessage = deleteListingError ? (
     <h4>Uh oh! Something went wrong with deleting :(. Please try again soon.</h4>
   ) : null;
-
-  const handleDeleteListing = async (id: string) => {
-    await deleteListing({ id })
-    refetch();
-  };
 
   return (
     <div>
