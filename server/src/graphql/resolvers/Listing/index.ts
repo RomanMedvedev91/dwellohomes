@@ -1,5 +1,6 @@
 import { IResolvers } from 'apollo-server-express';
 import { Database, Listing } from "../../../lib/types";
+import { ObjectID, ObjectId } from 'mongodb';
 
 export const ListingResolvers: IResolvers = {
   Query: {
@@ -19,7 +20,7 @@ export const ListingResolvers: IResolvers = {
       { db }: { db: Database }
     ): Promise<Listing> => {
       const deleteRes = await db.listings.findOneAndDelete({
-        _id: new Object(id)
+        _id: new ObjectId(id)
       });
       if (!deleteRes.value) {
         throw new Error("failed to delete listing");
