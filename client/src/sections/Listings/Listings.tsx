@@ -1,12 +1,15 @@
 import React from 'react'
 // import { DeleteListingData, DeleteListingVariables, ListingsData } from "./types";
-// import { useMutation, useQuery } from '../../lib/api';
+import { Alert, Avatar, List, Button, Spin } from "antd";
 import { useQuery, useMutation, gql } from '@apollo/client';
+
+import './styles/Listings.css';
 import { Listings as ListingsData } from "./__generated__/Listings";
 import {
   DeleteListing as DeleteListingData,
   DeleteListingVariables
 } from "./__generated__/DeleteListing";
+import ListingsSkeleton from './components/ListingsSkeleton/ListingsSkeleton';
 
 
 const LISTINGS = gql`
@@ -49,36 +52,45 @@ export const  Listings = ({ title }: IListingsProps) => {
     refetch();
   };
 
-  if (loading) {
-    return <h2>Loading...</h2>;
-  }
-  if(error) {
-    return <h2>Oh! something went wrong - please try again</h2>
-  }
-  const deleteListingLoadingMessage = deleteListingLoading ? (
-    <h4>Deletion in progress...</h4>
-  ) : null;
-  const deleteListingErrorMessage = deleteListingError ? (
-    <h4>Uh oh! Something went wrong with deleting :(. Please try again soon.</h4>
-  ) : null;
-
   return (
-    <div>
-      <h2>{title}</h2>
-        {data?.listings.map(listing => (
-          <li key={listing.id}>
-            {listing.title}{" "}
-            <button 
-              onClick={() => handleDeleteListing(listing.id)}
-            >
-              Delete
-            </button>
-            </li>
-        ))}
-        {deleteListingLoadingMessage}
-        {deleteListingErrorMessage}
-      <ul>
-      </ul>
-    </div>
+    <>
+      {(loading || error) && <ListingsSkeleton title={title} error={error} />}
+      <div className="listings">
+        {deleteListingError ? (
+          <Alert
+            type="error"
+            message="Uh oh! Something went wrong :(. Please try again later."
+            className="listings__alert"
+          />
+        ) : null}
+        <Spin spinning={deleteListingLoading}>
+          <h2>{title}</h2>
+          {data ? (
+              <List
+              itemLayout="horizontal"
+              dataSource={data.listings}
+              renderItem={listing => (
+                <List.Item
+                  actions={[
+                    <Button
+                      type="primary"
+                      onClick={() => handleDeleteListing(listing.id)}
+                    >
+                    Delete
+                  </Button>
+                  ]}
+                >
+                  <List.Item.Meta
+                    title={listing.title}
+                    description={listing.address}
+                    avatar={<Avatar src={listing.image} shape="square" size={48} />}
+                    />
+                </List.Item>
+              )}
+              />
+          ) : null}
+        </Spin>
+      </div>
+    </>
   )
 }
