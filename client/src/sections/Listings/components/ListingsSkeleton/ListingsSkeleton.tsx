@@ -7,7 +7,7 @@ interface IListingsSkeletonProps {
   title: string;
   error?: ApolloError;
 }
-export default function ListingsSkeleton({ title, error }: IListingsSkeletonProps) {
+export const  ListingsSkeleton = ({ title, error }: IListingsSkeletonProps) => {
   return (
     <div className="listings-skeleton">
       {error ? (
