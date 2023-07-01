@@ -9,7 +9,7 @@ import {
   DeleteListing as DeleteListingData,
   DeleteListingVariables
 } from "./__generated__/DeleteListing";
-import ListingsSkeleton from './components/ListingsSkeleton/ListingsSkeleton';
+import { ListingsSkeleton } from './components/ListingsSkeleton/ListingsSkeleton';
 
 
 const LISTINGS = gql`
