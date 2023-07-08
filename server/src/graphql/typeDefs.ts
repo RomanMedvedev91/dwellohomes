@@ -17,7 +17,7 @@ export const typeDefs = gql`
   }
 
   type Mutation {
-    logIn: String!
-    logOut: String!
+    logIn(input: LogInInput): Viewer! 
+    logOut: Viewer!
   }
 `;
