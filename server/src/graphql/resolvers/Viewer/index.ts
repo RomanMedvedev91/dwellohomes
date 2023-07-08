@@ -19,13 +19,26 @@ export const viewerResolvers: IResolvers = {
       { input }: LogInArgs,
       { db }: { db: Database }
     ): Promise<Viewer> => {
-      const code = input ? input.code : null;
-      const token = crypto.randomBytes(16).toString("hex");
+      try {
+        const code = input ? input.code : null;
+        const token = crypto.randomBytes(16).toString("hex");
+        const viewer: User | undefined = code
+        ? await logInViaGoogle(code, token, db)
+        : undefined;
 
-      const viewer: User | undefined = code
-      ? await logInViaGoogle(code, token, db)
-      : undefined;
-
+        if (!viewer) {
+          return { didRequest: true };
+        }
+        return {
+          _id: viewer._id,
+          token: viewer.token,
+          avatar: viewer.avatar,
+          walletId: viewer.walletId,
+          didRequest: true
+        };
+      } catch (err) {
+        throw new Error(`Failed to log in: ${err}`);
+      }
     },
     logOut: () => {
       return "Mutation.logOut";
