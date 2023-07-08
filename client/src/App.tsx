@@ -5,19 +5,23 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import { Home, Host, Listing, Listings, NotFound, User } from './sections';
+import { Home, Host, Listing, Listings, Login, NotFound, User } from './sections';
+import { Layout } from "antd";
 
 function App() {
   return (
     <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/host" element={<Host />} />
-      <Route path="/listing/:id" element={<Listing />} />
-      <Route path="/listings/:location?" element={<Listings title="Welcome to Dwello Homes" />} />
-      <Route path="/user/:id" element={<User />} />
-      <Route path="/*" element={<NotFound />} />
-    </Routes>
+    <Layout>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/host" element={<Host />} />
+        <Route path="/listing/:id" element={<Listing />} />
+        <Route path="/listings/:location?" element={<Listings title="Welcome to Dwello Homes" />} />
+        <Route path="/user/:id" element={<User />} />
+        <Route path="/*" element={<NotFound />} />
+      </Routes>
+    </Layout>
     </BrowserRouter>
   );
 }
