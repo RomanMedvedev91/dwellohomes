@@ -10,6 +10,7 @@ const logInViaGoogle = async (
   db: Database
 ): Promise<User | undefined> => {
   const { user } = await Google.logIn(code);
+  console.log("user: ", user);
 
   if (!user) {
     throw new Error("Google login error");

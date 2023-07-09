@@ -20,7 +20,6 @@ const mount = async (app: Application) => {
   console.log(`[app] : http://localhost:${port}`);
 
   const listings = await db.listings.find({}).toArray(); // listings is type any[]
-  console.log('listings: ', listings);
 };
 
 mount(express());

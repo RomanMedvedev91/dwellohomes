@@ -54,6 +54,7 @@ export const Login = ({ setViewer }: ILoginProps) => {
       const { data } = await client.query<AuthUrlData>({
         query: AUTH_URL
       });
+      console.log("Client data: ", data);
       window.location.href = data.authUrl;
     } catch(err) {
       displayErrorMessage("Sorry! We weren't able to log you in. Please try again later!");
@@ -75,7 +76,7 @@ export const Login = ({ setViewer }: ILoginProps) => {
 
   return (
     <Content className="log-in">
-    {logInError && <ErrorBanner description="We weren't able to log you in. Please try again soon." />}
+    {logInError ? <ErrorBanner description="We weren't able to log you in. Please try again soon." /> : null}
     <Card className="log-in-card">
       <div className="log-in-card__intro">
         <Title level={3} className="log-in-card__intro-title">
