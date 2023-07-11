@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { Layout } from "antd";
+import React, { useState, useEffect, useRef } from 'react';
 import {
   BrowserRouter,
   Routes,
@@ -9,7 +8,15 @@ import {
 import './App.css';
 import { AppHeader, Home, Host, Listing, Listings, Login, NotFound, User } from './sections';
 import { Viewer } from './lib/types';
-import { Affix } from "antd";
+import { Affix, Spin, Layout } from "antd";
+
+import { AppHeaderSkeleton, ErrorBanner } from './lib/components';
+import { LOG_IN } from "./lib/graphql/mutations";
+import {
+  LogIn as LogInData,
+  LogInVariables
+} from "./lib/graphql/mutations/LogIn/__generated__/LogIn";
+import { useMutation } from '@apollo/client';
 
 const initialViewer: Viewer = {
   id: null,
@@ -21,6 +28,34 @@ const initialViewer: Viewer = {
 
 function App() {
   const [viewer, setViewer] = useState<Viewer>(initialViewer);
+  const [logIn, { error }] = useMutation<LogInData, LogInVariables>(LOG_IN, {
+    onCompleted: data => {
+      if (data && data.logIn) {
+        setViewer(data.logIn);
+      }
+    }
+  });
+  const logInRef = useRef(logIn);
+
+  useEffect(() => {
+    logInRef.current();
+  }, []);
+
+  if (!viewer.didRequest && !error) {
+    return (
+      <Layout className="app-skeleton">
+        <AppHeaderSkeleton />
+        <div className="app-skeleton__spin-section">
+          <Spin size="large" tip="Launching Tinyhouse" />
+        </div>
+      </Layout>
+    );
+  };
+
+  const logInErrorBannerElement = error ? (
+    <ErrorBanner description="We weren't able to verify if you were logged in. Please try again later!" />
+  ) : null;
+
   return (
     <BrowserRouter>
       <Layout>
