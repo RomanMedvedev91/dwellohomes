@@ -8,7 +8,7 @@ import {
 import './App.css';
 import { AppHeader, Home, Host, Listing, Listings, Login, NotFound, User } from './sections';
 import { Viewer } from './lib/types';
-import { Affix, Spin, Layout } from "antd";
+import { Spin, Layout } from "antd";
 
 import { AppHeaderSkeleton, ErrorBanner } from './lib/components';
 import { LOG_IN } from "./lib/graphql/mutations";
