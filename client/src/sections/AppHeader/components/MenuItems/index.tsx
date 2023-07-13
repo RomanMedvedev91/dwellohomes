@@ -21,6 +21,7 @@ export const MenuItems = ({ viewer, setViewer }: IMenuItemsProps) => {
     onCompleted: data => {
       if (data && data.logOut) {
         setViewer(data.logOut);
+        sessionStorage.removeItem('token');
         displaySuccessNotification("You've successfully logged out!");
       }
     },

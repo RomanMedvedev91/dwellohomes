@@ -85,7 +85,7 @@ const logInViaGoogle = async (
     viewer = insertResult.ops[0];
   }
 
-  res.cookie('viewer', userId,  {
+  res.cookie('viewer', userId, {
     ...cookieOptions,
     maxAge: 365 * 24 * 60 * 60 * 1000
   });
