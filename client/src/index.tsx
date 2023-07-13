@@ -8,6 +8,9 @@ import reportWebVitals from './reportWebVitals';
 const client = new ApolloClient({
   uri: '/api',
   cache: new InMemoryCache(),
+  headers: {
+    "X-CSRF-TOKEN": sessionStorage.getItem("token") || ''
+  }
 });
 
 const root = ReactDOM.createRoot(
