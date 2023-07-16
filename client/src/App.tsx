@@ -57,13 +57,12 @@ function App() {
     );
   };
 
-  const logInErrorBannerElement = error ? (
-    <ErrorBanner description="We weren't able to verify if you were logged in. Please try again later!" />
-  ) : null;
-
   return (
     <BrowserRouter>
       <Layout>
+        {error ? (
+          <ErrorBanner description="We weren't able to verify if you were logged in. Please try again later!" />
+        ) : null}
         {/* <Affix offsetTop={0} className="app__affix-header"> */}
           <AppHeader viewer={viewer} setViewer={setViewer} />
         {/* </Affix> */}
