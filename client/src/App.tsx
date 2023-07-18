@@ -51,19 +51,18 @@ function App() {
       <Layout className="app-skeleton">
         <AppHeaderSkeleton />
         <div className="app-skeleton__spin-section">
-          <Spin size="large" tip="Launching Tinyhouse" />
+          <Spin size="large" tip="Launching Dwello Homes" />
         </div>
       </Layout>
     );
   };
 
-  const logInErrorBannerElement = error ? (
-    <ErrorBanner description="We weren't able to verify if you were logged in. Please try again later!" />
-  ) : null;
-
   return (
     <BrowserRouter>
       <Layout>
+        {error ? (
+          <ErrorBanner description="We weren't able to verify if you were logged in. Please try again later!" />
+        ) : null}
         {/* <Affix offsetTop={0} className="app__affix-header"> */}
           <AppHeader viewer={viewer} setViewer={setViewer} />
         {/* </Affix> */}
@@ -73,7 +72,7 @@ function App() {
           <Route path="/host" element={<Host />} />
           <Route path="/listing/:id" element={<Listing />} />
           <Route path="/listings/:location?" element={<Listings title="Welcome to Dwello Homes" />} />
-          <Route path="/user/:id" element={<User />} />
+          <Route path="/user/:id" element={<User viewer={viewer} />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </Layout>

@@ -178,3 +178,85 @@
     display: none;
   }
 }
+.user-bookings {
+  padding-top: 40px;
+}
+.user-bookings__title.ant-typography {
+  color: #1d226c;
+  display: inline-block;
+}
+.user-bookings__description.ant-typography {
+  font-size: 15px;
+}
+.user-bookings .ant-list-pagination {
+  padding-bottom: 20px;
+}
+.user-bookings__booking-item {
+  margin: 20px 0;
+}
+.user-bookings__booking-history {
+  margin-bottom: 20px;
+}
+.user-bookings__booking-history > div {
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+.user-bookings__booking-stars {
+  font-size: 13px;
+}
+.user-listings {
+  padding-top: 40px;
+}
+.user-listings__title.ant-typography {
+  color: #1d226c;
+  display: inline-block;
+}
+.user-listings .ant-list-pagination {
+  padding-bottom: 20px;
+}
+.user-listings__description.ant-typography {
+  font-size: 15px;
+}
+.user-profile {
+  max-width: 400px;
+  margin: 0 auto;
+  display: block;
+}
+.user-profile__card {
+  width: 100%;
+}
+.user-profile__avatar {
+  text-align: center;
+}
+.user-profile__details h4.ant-typography {
+  color: #1d226c;
+}
+.user-profile__details div.ant-typography {
+  font-size: 15px;
+}
+.user-profile__details-cta {
+  margin-bottom: 20px;
+}
+.user {
+  padding: 60px 120px;
+}
+@media (max-width: 75em) {
+  .user {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+html {
+  overflow: auto;
+}
+#root,
+body,
+html {
+  height: 100%;
+  width: 100%;
+}
+#app {
+  position: relative;
+  background: #fff;
+  min-height: 100vh;
+}
