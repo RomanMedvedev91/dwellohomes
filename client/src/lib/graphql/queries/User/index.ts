@@ -9,7 +9,7 @@ export const USER = gql`
       contact
       hasWallet
       income
-      bookings(limit: $limit, page: $$bookingsPage) {
+      bookings(limit: $limit, page: $bookingsPage) {
         total
         result {
           id
