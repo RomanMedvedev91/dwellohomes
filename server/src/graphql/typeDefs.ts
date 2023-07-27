@@ -24,6 +24,8 @@ export const typeDefs = gql`
     host: User!
     type: ListingType!
     address: String!
+    country: String!
+    admin: String!
     city: String!
     bookings(limit: Int!, page: Int!): Bookings
     bookingsIndex: String!

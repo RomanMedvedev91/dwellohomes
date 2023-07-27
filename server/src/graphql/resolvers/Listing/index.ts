@@ -1,10 +1,11 @@
 import { IResolvers } from "apollo-server-express";
 import { Request } from "express";
 import { Database, Listing, User } from "../../../lib/types";
-import { ListingArgs, ListingBookingsArgs, ListingBookingsData, ListingsArgs, ListingsData, ListingsFilter } from "./types";
+import { ListingArgs, ListingBookingsArgs, ListingBookingsData, ListingsArgs, ListingsData, ListingsFilter, ListingsQuery } from "./types";
 import { ObjectId } from "mongodb";
 import { authorize } from "../../../lib/utils";
 import { UserListingsData } from "../User/types";
+import { Google } from "../../../lib/api";
 
 export const listingResolvers: IResolvers = {
   Query: {
@@ -31,16 +32,26 @@ export const listingResolvers: IResolvers = {
     },
     listings: async (
       _root: undefined,
-      { filter, limit, page }: ListingsArgs,
+      { location, filter, limit, page }: ListingsArgs,
       { db }: { db: Database }
       ): Promise<ListingsData> => {
+        const query: ListingsQuery = {};
       try {
         const data: UserListingsData = {
           total: 0,
           result: []
         };
   
-        let cursor = await db.listings.find({});
+        if (location) {
+          const { country, admin, city } = await Google.geocode(location);
+          if (country) query.country = country;
+          if (admin) query.admin = admin;
+          if (city) query.city = city;
+          else {
+            throw new Error("no country found");
+          }
+        }
+        let cursor = await db.listings.find(query);
         
         if (filter && filter === ListingsFilter.PRICE_LOW_TO_HIGH) {
           cursor = cursor.sort({ price: -1 }) // - 1 sort descending
