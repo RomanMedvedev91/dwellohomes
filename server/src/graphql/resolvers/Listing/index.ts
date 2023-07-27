@@ -37,20 +37,27 @@ export const listingResolvers: IResolvers = {
       ): Promise<ListingsData> => {
         const query: ListingsQuery = {};
       try {
-        const data: UserListingsData = {
+        const data: ListingsData = {
+          region: null,
           total: 0,
           result: []
         };
   
         if (location) {
           const { country, admin, city } = await Google.geocode(location);
-          if (country) query.country = country;
+          if (city) query.city = city;
           if (admin) query.admin = admin;
           if (city) query.city = city;
-          else {
+          if (country) {
+            query.country = country;
+          } else {
             throw new Error("no country found");
           }
+          const cityText = city ? `${city}, ` : '';
+          const adminText = admin ? `${admin}, ` : '';
+          data.region = `${cityText}${adminText}${country}`;
         }
+
         let cursor = await db.listings.find(query);
         
         if (filter && filter === ListingsFilter.PRICE_LOW_TO_HIGH) {

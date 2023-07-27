@@ -33,6 +33,7 @@ export const typeDefs = gql`
     numOfGuests: Int!
   }
   type Listings {
+    region: String
     total: Int!
     result: [Listing!]!
   }
@@ -66,9 +67,9 @@ export const typeDefs = gql`
     user(id: ID!): User!
     listing(id: ID!): Listing!
     listings(
-      location: string | null,
-      filter: ListingsFilter!,
-      limit: Int!,
+      location: String
+      filter: ListingsFilter!
+      limit: Int!
       page: Int!
     ): Listings!
   }
