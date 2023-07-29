@@ -1,8 +1,9 @@
 import { IResolvers } from "apollo-server-express";
 import { Request } from "express";
+import { ObjectId } from "mongodb";
+
 import { Database, Listing, User } from "../../../lib/types";
 import { ListingArgs, ListingBookingsArgs, ListingBookingsData, ListingsArgs, ListingsData, ListingsFilter, ListingsQuery } from "./types";
-import { ObjectId } from "mongodb";
 import { authorize } from "../../../lib/utils";
 import { UserListingsData } from "../User/types";
 import { Google } from "../../../lib/api";
@@ -35,8 +36,8 @@ export const listingResolvers: IResolvers = {
       { location, filter, limit, page }: ListingsArgs,
       { db }: { db: Database }
       ): Promise<ListingsData> => {
+        try {
         const query: ListingsQuery = {};
-      try {
         const data: ListingsData = {
           region: null,
           total: 0,
@@ -61,10 +62,10 @@ export const listingResolvers: IResolvers = {
         let cursor = await db.listings.find(query);
         
         if (filter && filter === ListingsFilter.PRICE_LOW_TO_HIGH) {
-          cursor = cursor.sort({ price: -1 }) // - 1 sort descending
+          cursor = cursor.sort({ price: 1 })
         }
         if (filter && filter === ListingsFilter.PRICE_HIGH_TO_LOW) {
-          cursor = cursor.sort({ price: 1 }) // 1 sort ascending
+          cursor = cursor.sort({ price: -1 })
         }
         cursor = cursor.skip(page > 0 ? (page - 1) * limit : 0); 
         cursor = cursor.limit(limit);
