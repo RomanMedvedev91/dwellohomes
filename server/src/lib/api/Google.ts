@@ -57,9 +57,9 @@ export const Google = {
       }
     });
 
-    // if (res.status < 200 || res.status > 299) {
-    //   throw new Error (`failed to geocode address`);
-    // }
+    if (res.status < 200 || res.status > 299) {
+      throw new Error (`failed to geocode address`);
+    }
     // maps.geocode({
     //   params: {
     //     key: G_GEOCODE_KEY,
