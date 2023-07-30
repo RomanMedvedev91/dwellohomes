@@ -4,11 +4,11 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
+import { useMutation } from '@apollo/client';
+import { Spin, Layout } from "antd";
 
-import './App.css';
 import { AppHeader, Home, Host, Listing, Listings, Login, NotFound, User } from './sections';
 import { Viewer } from './lib/types';
-import { Spin, Layout } from "antd";
 
 import { AppHeaderSkeleton, ErrorBanner } from './lib/components';
 import { LOG_IN } from "./lib/graphql/mutations";
@@ -16,7 +16,6 @@ import {
   LogIn as LogInData,
   LogInVariables
 } from "./lib/graphql/mutations/LogIn/__generated__/LogIn";
-import { useMutation } from '@apollo/client';
 
 const initialViewer: Viewer = {
   id: null,

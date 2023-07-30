@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Layout, Typography, Col, Row } from 'antd'
 import { useQuery } from '@apollo/client';
 
-import { HomeHero, HomeListings, HomeListingsSkeleton } from './components'
+import { HomeHero, HomeListings, HomeListingsSkeleton } from './components';
 import mapBackground from "./assets/map-background.jpg";
 import sanFransiscoImage from "./assets/san-fransisco.jpg";
 import cancunImage from "./assets/cancun.jpg";
