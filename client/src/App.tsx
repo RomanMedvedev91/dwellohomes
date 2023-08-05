@@ -7,7 +7,7 @@ import {
 import { useMutation } from '@apollo/client';
 import { Spin, Layout } from "antd";
 
-import { AppHeader, Home, Host, Listing, Listings, Login, NotFound, User } from './sections';
+import { AppHeader, Home, Host, Listing, Listings, Login, NotFound, User, Stripe } from './sections';
 import { Viewer } from './lib/types';
 
 import { AppHeaderSkeleton, ErrorBanner } from './lib/components';
@@ -71,7 +71,8 @@ function App() {
           <Route path="/host" element={<Host />} />
           <Route path="/listing/:id" element={<Listing />} />
           <Route path="/listings/:location?" element={<Listings />} />
-          <Route path="/user/:id" element={<User viewer={viewer} />} />
+          <Route path="/user/:id" element={<User viewer={viewer} setViewer={setViewer} />} />
+          <Route path="/stripe" element={<Stripe viewer={viewer} setViewer={setViewer} />} />
           <Route path="/*" element={<NotFound />} />
         </Routes>
       </Layout>
