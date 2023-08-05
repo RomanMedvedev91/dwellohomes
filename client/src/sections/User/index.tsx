@@ -17,13 +17,14 @@ const { Content } = Layout;
 
 interface IUserProps {
   viewer: Viewer;
+  setViewer: (viewer: Viewer) => void;
 }
-export const User = ({ viewer }: IUserProps) => {
+export const User = ({ viewer, setViewer }: IUserProps) => {
   const { id } = useParams();
   const [listingsPage, setListingsPage] = useState(1);
   const [bookingsPage, setBookingsPage] = useState(1);
 
-  const { data, loading, error } = useQuery<UserData, UserVariables>(USER, {
+  const { data, loading, error, refetch } = useQuery<UserData, UserVariables>(USER, {
     variables: id ? {
       id,
       bookingsPage,
@@ -32,6 +33,9 @@ export const User = ({ viewer }: IUserProps) => {
     } : undefined
   });
 
+  const handleUserRefetch = async () => {
+    await refetch();
+  };
   if (loading) {
     return (
       <Content className="user">
@@ -58,7 +62,15 @@ export const User = ({ viewer }: IUserProps) => {
     <Content className="user">
       <Row gutter={12} justify="space-between">
         <Col xs={24}>
-          {user ? <UserProfile user={user} viewerIsUser={viewerIsUser} /> : null}
+          {user ? (
+            <UserProfile 
+              user={user}
+              viewer={viewer}
+              viewerIsUser={viewerIsUser}
+              setViewer={setViewer}
+              handleUserRefetch={handleUserRefetch}
+            />
+         ) : null}
         </Col>
         <Col xs={24}>
           {userListings ? (
